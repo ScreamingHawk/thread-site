@@ -52,6 +52,10 @@ button {
 	width: 500px;
 	max-width: 98%;
 }
+img.preview {
+	max-width: 50%;
+	max-height: 50vh;
+}
 /* Colours */
 .native body {
 	background-color: #4E342E;

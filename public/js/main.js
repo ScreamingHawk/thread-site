@@ -108,15 +108,13 @@ function addPost(postObj){
 		if (postObj.img){
 			var postImg = document.createElement('img');
 			postImg.src = postObj.img;
-			postImg.onerror = function(){
-				this.onerror = null;
-				this.src = 'img/broken.png';
-			};
+			postImg.onerror = imageError;
 			post.appendChild(postImg);
 		}
 		// Text
 		if (postObj.msg){
 			var postText = document.createTextNode(postObj.msg);
+			
 			post.appendChild(postText);
 		}
 		// Add post
@@ -131,6 +129,11 @@ function addPost(postObj){
 			}
 		}, 50);
 	}
+}
+
+function imageError(){
+	this.onerror = null;
+	this.src = 'img/broken.png';
 }
 
 // Quote a post
@@ -202,11 +205,26 @@ function ancientClick(){
 	}, button_delay);
 }
 
+// Preview post images
+function previewImage(){
+	var postImgSrc = document.getElementById('postImg').value;
+	var previewImg = document.getElementById('postImgPreview');
+	if (postImgSrc == ''){
+		previewImg.className = 'hidden';
+	} else {
+		previewImg.className = 'preview';
+		previewImg.src = postImgSrc;
+		previewImg.onerror = imageError;
+	}
+}
+
 function init(){
+	// Set up buttons
 	document.getElementById('toggleTheme').onclick = toggleTheme;
 	document.getElementById('impatient').onclick = impatientClick;
 	document.getElementById('ancient').onclick = ancientClick;
 	document.getElementById('makePost').onclick = makePost;
+	document.getElementById('postImg').onchange = previewImage;
 	
 	impatientClick();
 	setInterval(impatientClick, auto_refresh_delay);
