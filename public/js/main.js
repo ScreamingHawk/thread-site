@@ -130,15 +130,12 @@ function addPost(postObj){
 					postTextP.appendChild(document.createTextNode(s));
 				}
 				var el = document.createElement('a');
-				el.href = '#';
 				// Splice string
 				temp = postText.split('');
 				s = temp.splice(0, postText.match(re)[0].length).join('');
 				postText = temp.join('');
 				el.innerText = s;
-				el.onclick = function(){
-					linkTo(s.slice(2, s.length));
-				};
+				el.href = '#post'+s.slice(2, s.length);
 				postTextP.appendChild(el);
 				i = postText.indexOf(postText.match(re));
 			}
@@ -174,11 +171,6 @@ function quote(postId){
 	pos = postMsg.selectionStart;
 	postMsg.value = postMsg.value.substr(0, pos) + '>>' + postId + '\n' + postMsg.value.substr(pos);
 	postMsg.focus();
-	return false;
-}
-
-// Link to a post
-function linkTo(postId){
 	return false;
 }
 
