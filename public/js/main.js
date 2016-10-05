@@ -5,8 +5,8 @@ if (window.location.protocol == 'file:'){
 	ajax_url = 'http://localhost:3001/';
 }
 
-posting_delay = 10000;
-button_delay = 3000;
+posting_delay = 10;
+button_delay = 3;
 auto_refresh_delay = 30000;
 
 highest_id = null;
@@ -86,6 +86,7 @@ function addPost(postObj){
 		// Top info
 		var postTop = document.createElement('div');
 		post.appendChild(postTop);
+		post.appendChild(document.createElement('hr'));
 		// Post postId
 		if (postObj.postId){
 			var postId = document.createElement('a');
@@ -113,9 +114,40 @@ function addPost(postObj){
 		}
 		// Text
 		if (postObj.msg){
-			var postText = document.createTextNode(postObj.msg);
-			
-			post.appendChild(postText);
+			var postTextP = document.createElement('p');
+			// Linkify
+			var re = />>\d+/g
+			postText = postObj.msg;
+			var i = postText.indexOf(postText.match(re));
+			while (i != -1){
+				var temp;
+				var s;
+				if (i != 0){
+					// Splice string
+					temp = postText.split('');
+					s = temp.splice(0, i).join('');
+					postText = temp.join('');
+					postTextP.appendChild(document.createTextNode(s));
+				}
+				var el = document.createElement('a');
+				el.href = '#';
+				// Splice string
+				temp = postText.split('');
+				s = temp.splice(0, postText.match(re)[0].length).join('');
+				postText = temp.join('');
+				el.innerText = s;
+				el.onclick = function(){
+					linkTo(s.slice(2, s.length));
+				};
+				postTextP.appendChild(el);
+				i = postText.indexOf(postText.match(re));
+			}
+			if (postText.length > 0){
+				postTextP.appendChild(document.createTextNode(postText));
+			}
+			re = /\n/g;
+			postTextP.innerHTML = postTextP.innerHTML.replace(re, '<br />');
+			post.appendChild(postTextP);
 		}
 		// Add post
 		var postContainer = document.getElementById('postcontainer');
@@ -142,6 +174,12 @@ function quote(postId){
 	pos = postMsg.selectionStart;
 	postMsg.value = postMsg.value.substr(0, pos) + '>>' + postId + '\n' + postMsg.value.substr(pos);
 	postMsg.focus();
+	return false;
+}
+
+// Link to a post
+function linkTo(postId){
+	return false;
 }
 
 function makePost(){
@@ -171,14 +209,14 @@ function makePost(){
 				}
 				impatientClick();
 			}
-			setTimeout(function(){
-				makePostButton.disabled = false;
-			}, posting_delay);
+			buttonTimedDisable(makePostButton, posting_delay);
 		};
 
 		xmlhttp.open("POST", ajax_url, true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xmlhttp.send(JSON.stringify(post));
+	} else {
+		makePostButton.disabled = false;
 	}
 }
 
@@ -191,9 +229,7 @@ function impatientClick(){
 	} else {
 		getNewerPosts();
 	}
-	setTimeout(function(){
-		impatient.disabled = false;
-	}, button_delay);
+	buttonTimedDisable(impatient, button_delay);
 }
 
 // Load older posts
@@ -201,9 +237,22 @@ function ancientClick(){
 	var ancient = document.getElementById('ancient');
 	ancient.disabled = true;
 	getOlderPosts();
-	setTimeout(function(){
-		ancient.disabled = false;
-	}, button_delay);
+	buttonTimedDisable(ancient, button_delay);
+}
+
+function buttonTimedDisable(butt, seconds, repeat){
+	butt.disabled = true;
+	if (repeat == true){
+		//butt.innerText = butt.innerText.slice(0, butt.innerText.lastIndexOf(" "));
+	}
+	if (seconds <= 0){
+		butt.disabled = false;
+	} else {
+		//butt.innerText += ' '+seconds+'...';
+		setTimeout(function(){
+			buttonTimedDisable(butt, seconds-1, true);
+		}, 1000);
+	}
 }
 
 // Preview post images
