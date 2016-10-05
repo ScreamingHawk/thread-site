@@ -1,5 +1,13 @@
-ajax_url = 'http://localhost:3001/';
 ajax_url = 'https://kmu43f0xqb.execute-api.us-east-1.amazonaws.com/prod/posts/';
+
+if (window.location.protocol == 'file:'){
+	// Testing mode
+	ajax_url = 'http://localhost:3001/';
+}
+
+posting_delay = 10000;
+button_delay = 3000;
+auto_refresh_delay = 30000;
 
 highest_id = null;
 lowest_id = null;
@@ -157,28 +165,17 @@ function makePost(){
 				} else {
 					//TODO alert('something else other than 200 was returned');
 				}
+				impatientClick();
 			}
 			setTimeout(function(){
 				makePostButton.disabled = false;
-			}, 10000);
+			}, posting_delay);
 		};
 
 		xmlhttp.open("POST", ajax_url, true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xmlhttp.send(JSON.stringify(post));
 	}
-}
-
-var currentTheme = 0;
-var themes = ['native', 'amber'];
-
-function toggleTheme(){
-	currentTheme++;
-	// Intentional out of bounds to include no theme
-	if (currentTheme > themes.length){
-		currentTheme = 0;
-	}
-	document.documentElement.className = themes[currentTheme];
 }
 
 // Load newer posts
@@ -192,7 +189,7 @@ function impatientClick(){
 	}
 	setTimeout(function(){
 		impatient.disabled = false;
-	}, 3000);
+	}, button_delay);
 }
 
 // Load older posts
@@ -202,7 +199,7 @@ function ancientClick(){
 	getOlderPosts();
 	setTimeout(function(){
 		ancient.disabled = false;
-	}, 3000);
+	}, button_delay);
 }
 
 function init(){
@@ -212,10 +209,22 @@ function init(){
 	document.getElementById('makePost').onclick = makePost;
 	
 	impatientClick();
-	// Auto-load 60 sec
-	setInterval(impatientClick, 60000);
+	setInterval(impatientClick, auto_refresh_delay);
 }
 init();
+
+/* Themes */
+var currentTheme = 0;
+var themes = ['native', 'amber'];
+
+function toggleTheme(){
+	currentTheme++;
+	// Intentional out of bounds to include no theme
+	if (currentTheme > themes.length){
+		currentTheme = 0;
+	}
+	document.documentElement.className = themes[currentTheme];
+}
 
 /* Ads */
 function adBlockDetected() {
