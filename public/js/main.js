@@ -155,6 +155,7 @@ function makePost(){
 	var postImg = document.getElementById('postImg');
 	post.img = postImg.value;
 	postImg.value = '';
+	previewImage();
 	
 	if (post.msg != '' || post.img != ''){
 		var xmlhttp = new XMLHttpRequest();
@@ -209,6 +210,7 @@ function ancientClick(){
 function previewImage(){
 	var postImgSrc = document.getElementById('postImg').value;
 	var previewImg = document.getElementById('postImgPreview');
+	console.log(postImgSrc);
 	if (postImgSrc == ''){
 		previewImg.className = 'hidden';
 	} else {
