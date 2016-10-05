@@ -1,0 +1,28 @@
+{
+  "name": "thread-site",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Michael Standen <michael@standen.link> (http://michael.standen.link/)",
+  "main": "app.js",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ScreamingHawk/thread-site.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ScreamingHawk/thread-site/issues"
+  },
+  "dependencies": {
+    "mysql": "^2.11.1",
+    "xss": "^0.2.13"
+  },
+  "devDependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  }
+}

@@ -1,0 +1,10 @@
+{
+    "dbHost": "placeholder",
+    "dbUser": "placeholder",
+	"dbSecret": "placeholder",
+    "dbSchema": "placeholder",
+	
+	"postLimit": 100,
+	
+    "serverPort": 3001
+}
