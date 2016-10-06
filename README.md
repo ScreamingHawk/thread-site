@@ -23,7 +23,7 @@ Feel free to block these services, however it will eat at my revenue, so conside
   * Note: When using the `file:` protocol to access the client side, the server will point at localhost
 7. Read the `Other Stuff to Note` below
 
-## Web Hosting
+## Web Hosting (MicroServices)
 1. Create a MySQL database using the [database schema](https://github.com/ScreamingHawk/thread-site/tree/master/database)
 2. Update the [configuration file](https://github.com/ScreamingHawk/thread-site/blob/master/server/config.json) to point to your database
 3. Build the server side microservices using the [build script](https://github.com/ScreamingHawk/thread-site/blob/master/server/build.bat)
@@ -32,6 +32,14 @@ Feel free to block these services, however it will eat at my revenue, so conside
 6. Upload the [public folder](https://github.com/ScreamingHawk/thread-site/blob/master/public) to an [AWS S3](https://aws.amazon.com/s3/) bucket, and [configure it for static website hosting](http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html)
 7. (Optional) Point your [domain name](https://aws.amazon.com/route53/) to the bucket URL
 8. Read the `Other Stuff to Note` below
+
+## Web Hosting (Monolithic)
+1. Create a MySQL database using the [database schema](https://github.com/ScreamingHawk/thread-site/tree/master/database)
+2. Update the [configuration file](https://github.com/ScreamingHawk/thread-site/blob/master/server/config.json) to point to your database
+3. Upload the [server side](https://github.com/ScreamingHawk/thread-site/tree/master/server) application to an [AWS EC2](https://aws.amazon.com/ec2/) or [AWS ElasticBeanStalk](https://aws.amazon.com/elasticbeanstalk/) instance
+4. Upload the [public folder](https://github.com/ScreamingHawk/thread-site/blob/master/public) to an [AWS S3](https://aws.amazon.com/s3/) bucket, and [configure it for static website hosting](http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html)
+5. (Optional) Point your [domain name](https://aws.amazon.com/route53/) to the bucket URL
+6. Read the `Other Stuff to Note` below
 
 ## Other Stuff to Note
 * As per the MIT license, you **must** retain my credits when using this software
