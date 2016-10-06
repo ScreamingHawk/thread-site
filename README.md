@@ -7,7 +7,8 @@ A single thread style forum.
 We don't store any user identifying information. 
 * No sign up requirement
 * No IP logging
-* No named posts
+* No cookies
+* No names
 
 ## Not Anonymous Gotchas
 In order to provide usage information and revenue, we use [Google Analytics](https://www.google.com/analytics/) and [Google AdSense](https://www.google.co.nz/adwords/). 
