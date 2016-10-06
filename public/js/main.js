@@ -147,11 +147,17 @@ function addPost(postObj){
 			post.appendChild(postTextP);
 		}
 		// Add post
+		var before = 0;
+		for (var i = 0; i < postIds.length; i++){
+			if (postIds[i] > before && postObj.postId > postIds[i]){
+				before = postIds[i];
+			}
+		}
 		var postContainer = document.getElementById('postcontainer');
-		if (postObj.postId < lowest_id){
+		if (before <= 0){
 			postContainer.appendChild(post);
 		} else {
-			postContainer.insertBefore(post, postContainer.firstChild);
+			postContainer.insertBefore(post, document.getElementById('post'+before));
 		}
 		// Mark added
 		postIds.push(postObj.postId);
