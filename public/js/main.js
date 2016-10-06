@@ -28,6 +28,7 @@ function getExactPost(postId){
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function(){
 		handleGetPosts(xmlhttp, false);
+		window.location.hash = '#post'+postId;
 	};
 	xmlhttp.open("GET", ajax_url + postId, true);
 	xmlhttp.send();
@@ -123,19 +124,27 @@ function addPost(postObj){
 				var temp;
 				var s;
 				if (i != 0){
-					// Splice string
+					// Text
 					temp = postText.split('');
 					s = temp.splice(0, i).join('');
 					postText = temp.join('');
 					postTextP.appendChild(document.createTextNode(s));
 				}
+				// Post reference
 				var el = document.createElement('a');
-				// Splice string
 				temp = postText.split('');
 				s = temp.splice(0, postText.match(re)[0].length).join('');
 				postText = temp.join('');
 				el.innerText = s;
-				el.href = '#post'+s.slice(2, s.length);
+				elPostId = s.slice(2, s.length);
+				el.href = '#post'+elPostId;
+				el.onclick = function(){
+					// Download post if not on page
+					if (postIds.indexOf(elPostId) == -1){
+						getExactPost(elPostId);
+					}
+					return true;
+				}
 				postTextP.appendChild(el);
 				i = postText.indexOf(postText.match(re));
 			}
