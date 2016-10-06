@@ -2,6 +2,7 @@ express = require 'express'
 bodyparser = require 'body-parser'
 xss = require 'xss'
 
+contextFactory = require './context'
 config = require './config.json'
 
 app = express()
@@ -26,7 +27,7 @@ app.get '/', (req, res)->
 #GET post
 exactPost = require './exactPost'
 app.get '/:postId', (req, res)->
-	context = require './context'
+	context = contextFactory.createContext()
 	context.init res
 	exactPost.handler 
 			postId: req.params.postId
@@ -35,7 +36,7 @@ app.get '/:postId', (req, res)->
 #GET up
 newerPosts = require './newerPosts'
 app.get '/:postId/up', (req, res)->
-	context = require './context'
+	context = contextFactory.createContext()
 	context.init res
 	newerPosts.handler 
 			postId: req.params.postId
@@ -44,7 +45,7 @@ app.get '/:postId/up', (req, res)->
 #GET down
 olderPosts = require './olderPosts'
 app.get '/:postId/down', (req, res)->
-	context = require './context'
+	context = contextFactory.createContext()
 	context.init res
 	olderPosts.handler 
 			postId: req.params.postId
@@ -53,7 +54,7 @@ app.get '/:postId/down', (req, res)->
 #POST
 addPost = require './addPost'
 app.post '/', (req, res)->
-	context = require './context'
+	context = contextFactory.createContext()
 	context.init res
 	post = 
 		msg: req.body.msg

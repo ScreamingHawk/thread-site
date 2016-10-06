@@ -1,19 +1,24 @@
 exports = module.exports = {}
 
-exports.init = (res)->
-	exports.res = res
-
-exports.succeed = (results)->
-	if exports.res?
-		if results?
-			exports.res.json results
+exports.createContext = ()->
+	context = {}
 	
-exports.done = (err, message)->
-	if exports.res?
-		if err?
-			exports.res.status 500
-			exports.res.json err
-		else if message?
-			exports.res.json message
-		else
-			exports.res.sendStatus 200
+	context.init = (res)->
+		context.res = res
+
+	context.succeed = (results)->
+		if context.res?
+			if results?
+				context.res.json results
+	
+	context.done = (err, message)->
+		if context.res?
+			if err?
+				context.res.status 500
+				context.res.json err
+			else if message?
+				context.res.json message
+			else
+				context.res.sendStatus 200
+				
+	return context
