@@ -142,8 +142,10 @@ function addPost(postObj){
 			if (postText.length > 0){
 				postTextP.appendChild(document.createTextNode(postText));
 			}
-			re = /\n/g;
-			postTextP.innerHTML = postTextP.innerHTML.replace(re, '<br />');
+			linkifyElement(postTextP, {
+				ignoreTags: ['script', 'a'],
+				nl2br: true
+			});
 			post.appendChild(postTextP);
 		}
 		// Add post
