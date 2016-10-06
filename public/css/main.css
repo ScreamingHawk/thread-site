@@ -56,6 +56,11 @@ img.preview {
 	max-width: 50%;
 	max-height: 50vh;
 }
+#loading, #loadingLower {
+	margin: 15px;
+	text-align: center;
+}
+
 /* Colours */
 .native body {
 	background-color: #4E342E;
@@ -114,7 +119,7 @@ img.preview {
 .larger {
 	font-size: 1.2em;
 }
-.transparent {
+.transparent, .invisibile {
 	opacity: 0;
 }
 .clearfix {

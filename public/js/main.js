@@ -9,10 +9,12 @@ posting_delay = 10;
 button_delay = 3;
 auto_refresh_delay = 30000;
 
+postIds = [];
 highest_id = null;
 lowest_id = null;
 
 function getPosts(){
+	loading();
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function(){
 		handleGetPosts(xmlhttp, false);
@@ -22,6 +24,7 @@ function getPosts(){
 }
 
 function getExactPost(postId){
+	loading();
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function(){
 		handleGetPosts(xmlhttp, false);
@@ -31,6 +34,7 @@ function getExactPost(postId){
 }
 
 function getNewerPosts(){
+	loading();
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function(){
 		handleGetPosts(xmlhttp, false);
@@ -40,6 +44,7 @@ function getNewerPosts(){
 }
 
 function getOlderPosts(){
+	loading();
 	if (lowest_id > 1){
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function(){
@@ -59,12 +64,6 @@ function handleGetPosts(xmlhttp, reverse){
 			}
 			for (var i = 0; i < resp.length; i++){
 				post = resp[i];
-				if (highest_id == null || post.postId > highest_id){
-					highest_id = post.postId;
-				}
-				if (lowest_id == null || post.postId < lowest_id){
-					lowest_id = post.postId;
-				}
 				addPost(post);
 			}
 		} else if (xmlhttp.status == 400) {
@@ -72,6 +71,7 @@ function handleGetPosts(xmlhttp, reverse){
 		} else {
 			//TODO alert('something else other than 200 was returned');
 		}
+		unloading();
 	}
 }
 
@@ -148,7 +148,22 @@ function addPost(postObj){
 		}
 		// Add post
 		var postContainer = document.getElementById('postcontainer');
-		postContainer.insertBefore(post, postContainer.firstChild);
+		if (postObj.postId < lowest_id){
+			postContainer.appendChild(post);
+		} else {
+			postContainer.insertBefore(post, postContainer.firstChild);
+		}
+		// Mark added
+		postIds.push(postObj.postId);
+		if (highest_id == null || postObj.postId > highest_id){
+			highest_id = postObj.postId;
+		}
+		if (lowest_id == null || postObj.postId < lowest_id){
+			lowest_id = postObj.postId;
+			if (lowest_id <= 1){
+				document.getElementById('ancient').className = 'transparent';
+			}
+		}
 		// Transition
 		setTimeout(function(){
 			post.className = 'panel';
@@ -245,6 +260,19 @@ function buttonTimedDisable(butt, seconds, repeat){
 			buttonTimedDisable(butt, seconds-1, true);
 		}, 1000);
 	}
+}
+
+function loading(){
+	document.getElementById('loading').className = '';
+	if (document.getElementById('postcontainer').firstElementChild != null && 
+			document.getElementById('ancient').className != 'transparent'){
+		document.getElementById('loadingLower').className = '';
+	}
+}
+
+function unloading(){
+	document.getElementById('loading').className = 'transparent';
+	document.getElementById('loadingLower').className = 'transparent';
 }
 
 // Preview post images
