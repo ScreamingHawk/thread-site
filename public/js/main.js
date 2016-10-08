@@ -119,7 +119,11 @@ function addPost(postObj){
 			// Linkify
 			var re = />>\d+/g
 			postText = postObj.msg;
-			var i = postText.indexOf(postText.match(re));
+			var m = postText.match(re)
+			var i = -1;
+			if (m != null){
+				i = postText.indexOf(m[0]);
+			}
 			while (i != -1){
 				var temp;
 				var s;
@@ -146,7 +150,11 @@ function addPost(postObj){
 					return true;
 				}
 				postTextP.appendChild(el);
-				i = postText.indexOf(postText.match(re));
+				m = postText.match(re)
+				i = -1;
+				if (m != null){
+					i = postText.indexOf(m[0]);
+				}
 			}
 			if (postText.length > 0){
 				postTextP.appendChild(document.createTextNode(postText));
