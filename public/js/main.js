@@ -194,7 +194,7 @@ function addPost(postObj){
 
 function imageError(){
 	this.onerror = null;
-	this.src = 'img/broken.png';
+	this.src = 'img/broken.jpg';
 }
 
 // Quote a post
