@@ -20,7 +20,7 @@ app.use bodyparser.json()
 #GET
 latestPosts = require './latestPosts'
 app.get '/', (req, res)->
-	context = require './context'
+	context = contextFactory.createContext()
 	context.init res
 	latestPosts.handler null, context
 	
