@@ -1,0 +1,23 @@
+body {
+	background-color: #4E342E;
+	color: #EEE;
+}
+button {
+	background-color: #BBDEFB;
+	box-shadow: 1px 1px 1px #448AFF;
+}
+input,
+textarea {
+	background-color: #BBDEFB;
+	border: none;
+	box-shadow: 1px 1px 1px #448AFF;
+}
+.panel,
+#postbox {
+	background-color: #90CAF9;
+	box-shadow: 5px 5px 5px #448AFF;
+	color: #333;
+}
+footer a {
+	color: #82B1FF;
+}
