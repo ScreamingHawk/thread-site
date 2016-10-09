@@ -321,7 +321,7 @@ init();
 
 /* Themes */
 var currentTheme = 0;
-var themes = ['native', 'amber'];
+var themes = ['native', 'amber', 'cyaneila'];
 
 function toggleTheme(){
 	currentTheme++;
@@ -330,6 +330,7 @@ function toggleTheme(){
 		currentTheme = 0;
 	}
 	document.documentElement.className = themes[currentTheme];
+	document.getElementById('themeCss').href = 'css/' + themes[currentTheme] + '.css';
 }
 
 /* Ads */

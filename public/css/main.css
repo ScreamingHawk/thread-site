@@ -61,51 +61,6 @@ img.preview {
 	text-align: center;
 }
 
-/* Colours */
-.native body {
-	background-color: #4E342E;
-	color: #EEE;
-}
-.amber body {
-	background-color: #FFE57F;
-}
-.native button {
-	background-color: #BBDEFB;
-	box-shadow: 1px 1px 1px #448AFF;
-}
-.amber button {
-	background-color: #FFCA28;
-	box-shadow: 1px 1px 1px #FFC107;
-}
-.native input,
-.native textarea {
-	background-color: #BBDEFB;
-	border: none;
-	box-shadow: 1px 1px 1px #448AFF;
-}
-.amber input,
-.amber textarea {
-	background-color: #FFCA28;
-	border: none;
-	box-shadow: 1px 1px 1px #FFC107;
-}
-.native .panel,
-.native #postbox {
-	background-color: #90CAF9;
-	box-shadow: 5px 5px 5px #448AFF;
-	color: #333;
-}
-.amber .panel,
-.amber #postbox {
-	background-color: #FFC107;
-	box-shadow: 5px 5px 5px #FFC107;
-}
-.native footer a {
-	color: #82B1FF;
-}
-.amber footer a {
-	color: #FFE57F;
-}
 /* Helpers */
 .right {
 	float: right;

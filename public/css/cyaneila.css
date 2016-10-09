@@ -1,0 +1,65 @@
+.container h1 {
+	margin: 24px;
+}
+
+/* Body */
+body {
+	background: rgb(18, 30, 42);
+	color: #85a4bd;
+}
+
+
+/* Postbox */
+.panel, #postbox {
+	background-color: transparent;
+	box-shadow: none;
+	color: #85a4bd;
+}
+
+#postbox h3 {
+	font-size: 1em;
+}
+
+.postinfo label {
+	font-size: 0.8em;
+}
+
+#postbox input, #postbox textarea {
+	box-shadow: none;
+	background-color: #85949f;
+}
+
+
+/* Panel */
+.panel {
+	padding: 0;
+	border-bottom: #85a4bd 1px solid;
+	font-size: 0.8em;
+}
+
+.panel img {
+	margin: 0;
+}
+
+.panel hr {
+	display: none;
+}
+
+.panel a {
+	color: #59c94e;
+}
+
+.panel .right {
+	float: none;
+	margin-left: 10px;
+}
+
+
+/* Button */
+.container button {    
+	color: #50934a;
+    background: transparent;
+    border: 1px solid #3a5a36;
+    box-shadow: none;
+    padding: 6px 12px;
+}
