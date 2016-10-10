@@ -314,32 +314,46 @@ function previewImage(){
 	}
 }
 
+/* Themes */
+var themes = ['', 'Native', 'Amber', 'Cyaneila'];
+
+function initThemes(){
+	var themeSelect = document.getElementById('themeSelect');
+	for (var i = 0; i < themes.length; i++){
+		var opt = document.createElement('option');
+		opt.innerText = themes[i];
+		opt.value = themes[i];
+		themeSelect.appendChild(opt);
+	}
+	// Default to first non-blank
+	themeSelect.selectedIndex = 1;
+	toggleTheme();
+}
+
+function toggleTheme(){
+	var themeSelect = document.getElementById('themeSelect');
+	var theme = themeSelect.options[themeSelect.selectedIndex].value;
+	document.documentElement.className = theme;
+	document.getElementById('themeCss').href = 'css/' + theme.toLowerCase() + '.css';
+}
+
+/* Init */
 function init(){
+	// Set up themes
+	initThemes();
+	document.getElementById('themeSelect').onchange = toggleTheme;
 	// Set up buttons
-	document.getElementById('toggleTheme').onclick = toggleTheme;
 	document.getElementById('impatient').onclick = impatientClick;
 	document.getElementById('ancient').onclick = ancientClick;
 	document.getElementById('makePost').onclick = makePost;
 	document.getElementById('postImg').onchange = previewImage;
 	
+	// Initial load
 	impatientClick();
+	// Auto refresh
 	setInterval(impatientClick, auto_refresh_delay);
 }
 init();
-
-/* Themes */
-var currentTheme = 0;
-var themes = ['native', 'amber', 'cyaneila'];
-
-function toggleTheme(){
-	currentTheme++;
-	// Intentional out of bounds to include no theme
-	if (currentTheme > themes.length){
-		currentTheme = 0;
-	}
-	document.documentElement.className = themes[currentTheme];
-	document.getElementById('themeCss').href = 'css/' + themes[currentTheme] + '.css';
-}
 
 /* Ads */
 function adBlockDetected() {
