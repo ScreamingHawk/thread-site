@@ -1,6 +1,8 @@
 -- Create database
 CREATE DATABASE IF NOT EXISTS chan;
 
+ALTER DATABASE chan CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 USE chan;
 
 CREATE TABLE IF NOT EXISTS posts (
@@ -10,3 +12,5 @@ CREATE TABLE IF NOT EXISTS posts (
 	time DATETIME DEFAULT NOW(), 
 	PRIMARY KEY (postId)
 ) engine=innodb;
+
+ALTER TABLE posts CHARACTER SET utf8 COLLATE utf8_general_ci;
