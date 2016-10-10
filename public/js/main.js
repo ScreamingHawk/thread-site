@@ -34,6 +34,17 @@ function getExactPost(postId){
 	xmlhttp.send();
 }
 
+function deletePost(postId, modId, pass){
+	var mod = {
+		"modId": modId,
+		"pass": pass
+	};
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("DELETE", ajax_url + postId, true);
+	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	xmlhttp.send(JSON.stringify(mod));
+}
+
 function getNewerPosts(){
 	loading();
 	var xmlhttp = new XMLHttpRequest();
@@ -250,6 +261,16 @@ function makePost(){
 	} else {
 		makePostButton.disabled = false;
 	}
+}
+
+function makeMod(pass){
+	var mod = {
+		"pass": pass
+	};
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", ajax_url + 'mod', true);
+	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	xmlhttp.send(JSON.stringify(mod));
 }
 
 // Load newer posts

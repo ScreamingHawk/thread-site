@@ -17,14 +17,14 @@ app.use (req, res, next)->
 #JSON body
 app.use bodyparser.json()
 
-#GET
+#Get latest posts
 latestPosts = require './latestPosts'
 app.get '/', (req, res)->
 	context = contextFactory.createContext()
 	context.init res
 	latestPosts.handler null, context
-	
-#GET post
+
+#Get exact post
 exactPost = require './exactPost'
 app.get '/:postId', (req, res)->
 	context = contextFactory.createContext()
@@ -33,7 +33,7 @@ app.get '/:postId', (req, res)->
 			postId: req.params.postId
 		, context
 
-#GET up
+#Get post and above
 newerPosts = require './newerPosts'
 app.get '/:postId/up', (req, res)->
 	context = contextFactory.createContext()
@@ -42,7 +42,7 @@ app.get '/:postId/up', (req, res)->
 			postId: req.params.postId
 		, context
 
-#GET down
+#Get post and below
 olderPosts = require './olderPosts'
 app.get '/:postId/down', (req, res)->
 	context = contextFactory.createContext()
@@ -51,7 +51,7 @@ app.get '/:postId/down', (req, res)->
 			postId: req.params.postId
 		, context
 
-#POST
+#Add post
 addPost = require './addPost'
 app.post '/', (req, res)->
 	context = contextFactory.createContext()
@@ -61,6 +61,26 @@ app.post '/', (req, res)->
 		img: xss req.body.img
 	addPost.handler post, context
 
+#Delete post
+deletePost = require './deletePost'
+app.delete '/:postId', (req, res)->
+	context = contextFactory.createContext()
+	context.init res
+	deletePost.handler 
+			modId: req.body.modId
+			pass: req.body.pass
+			postId: req.params.postId
+		, context
+
+#Add mod
+addMod = require './addMod'
+app.post '/mod', (req, res)->
+	context = contextFactory.createContext()
+	context.init res
+	addMod.handler 
+			modId: req.body.modId
+			pass: req.body.pass
+		, context
 
 #Init
 app.listen config.serverPort, ()->
