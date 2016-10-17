@@ -51,8 +51,15 @@ button {
 	display: inline-block;
 	vertical-align: top;
 }
+@media only screen and (max-width: 708px) {
+	.postinfo label.small-hidden {
+		display: none;
+	}
+}
 .postinfo input,
-.postinfo textarea {
+.postinfo textarea,
+.postinfo div.infoblock {
+	display: inline-block;
 	width: 500px;
 	max-width: 98%;
 }
