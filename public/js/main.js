@@ -368,6 +368,9 @@ function init(){
 	document.getElementById('ancient').onclick = ancientClick;
 	document.getElementById('makePost').onclick = makePost;
 	document.getElementById('postImg').onchange = previewImage;
+	document.getElementById('postImg').onpaste = function(){
+		setTimeout(previewImage, 5);
+	};
 	
 	// Initial load
 	impatientClick();
