@@ -28,6 +28,7 @@ function getExactPost(postId){
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function(){
 		handleGetPosts(xmlhttp, false);
+		window.location.hash = '';
 		window.location.hash = '#post'+postId;
 	};
 	xmlhttp.open("GET", ajax_url + postId, true);
@@ -374,6 +375,11 @@ function init(){
 	
 	// Initial load
 	impatientClick();
+	// Resolve hash
+	var hash = window.location.hash.split('post');
+	if (hash.length > 0){
+		getExactPost(hash[1]);
+	}
 	// Auto refresh
 	setInterval(impatientClick, auto_refresh_delay);
 }
