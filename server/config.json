@@ -1,10 +1,8 @@
 {
     "dbHost": "placeholder",
     "dbUser": "placeholder",
-	"dbSecret": "placeholder",
+    "dbSecret": "placeholder",
     "dbSchema": "placeholder",
-	
-	"postLimit": 100,
-	
+    "postLimit": 100,
     "serverPort": 3001
 }
