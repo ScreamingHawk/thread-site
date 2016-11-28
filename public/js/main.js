@@ -29,7 +29,9 @@ function getExactPost(postId){
 	xmlhttp.onreadystatechange = function(){
 		handleGetPosts(xmlhttp, false);
 		window.location.hash = '';
-		window.location.hash = '#post'+postId;
+		if (postId != 'undefined'){
+			window.location.hash = '#post'+postId;
+		}
 	};
 	xmlhttp.open("GET", ajax_url + postId, true);
 	xmlhttp.send();
