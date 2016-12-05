@@ -18,6 +18,8 @@
     "url": "https://github.com/ScreamingHawk/thread-site/issues"
   },
   "dependencies": {
+    "aws-sdk": "^2.7.10",
+    "dateformat": "^2.0.0",
     "mysql": "^2.11.1",
     "xss": "^0.2.13"
   },

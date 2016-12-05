@@ -1,8 +1,6 @@
 {
-    "dbHost": "placeholder",
-    "dbUser": "placeholder",
-    "dbSecret": "placeholder",
-    "dbSchema": "placeholder",
-    "postLimit": 100,
-    "serverPort": 3001
+	"s3Bucket": "place_holder",
+	"s3Override": true,
+	"postLimit": 100,
+	"serverPort": 3001
 }

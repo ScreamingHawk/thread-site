@@ -1,4 +1,4 @@
-db = require './db'
+#db = require './db'
 config = require './config.json'
 
 exports = module.exports = {}
