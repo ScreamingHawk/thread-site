@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node app.js",
+    "build": "rm *.js & coffee -c .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
