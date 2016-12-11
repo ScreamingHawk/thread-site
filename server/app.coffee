@@ -34,17 +34,6 @@ app.post '/', (req, res)->
 		img: xss req.body.img
 	addPost.handler post, context
 
-#Delete post
-deletePost = require './deletePost'
-app.delete '/:postId', (req, res)->
-	context = contextFactory.createContext()
-	context.init res
-	deletePost.handler 
-			modId: req.body.modId
-			pass: req.body.pass
-			postId: req.params.postId
-		, context
-
 #Init
 app.listen config.serverPort, ()->
 	console.log 'Listening on port ' + config.serverPort
