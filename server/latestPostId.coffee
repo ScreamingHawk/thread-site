@@ -1,11 +1,12 @@
-db = require './db'
+postHandler = require './postHandler'
 config = require './config.json'
 
 exports = module.exports = {}
 
 exports.handler = (event, context)->
-	db.query "SELECT * FROM posts LIMIT ?", [config.postLimit], (err, result)->
+	postHandler.latestPostId (err, postId)->
 		if err?
 			context.done 'Error listing posts'
 		else
-			context.succeed result
+			context.succeed 
+				postId: postId

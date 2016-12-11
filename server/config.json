@@ -1,8 +1,7 @@
 {
-    "dbHost": "placeholder",
-    "dbUser": "placeholder",
-    "dbSecret": "placeholder",
-    "dbSchema": "placeholder",
-    "postLimit": 100,
-    "serverPort": 3001
+	"awsProfile": "placeholder",
+	"s3Bucket": "placeholder",
+	"s3Override": true,
+	"postLimit": 100,
+	"serverPort": 3001
 }
