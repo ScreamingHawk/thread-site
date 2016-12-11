@@ -1,4 +1,5 @@
 ajax_url = 'https://kmu43f0xqb.execute-api.us-east-1.amazonaws.com/prod/posts/';
+ajax_posts_url = 'posts/';
 
 if (window.location.protocol == 'file:'){
 	// Testing mode
@@ -13,81 +14,46 @@ postIds = [];
 highest_id = null;
 lowest_id = null;
 
-function getPosts(){
+function getLatestPost(){
 	loading();
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function(){
-		handleGetPosts(xmlhttp, false);
+		if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+			if (xmlhttp.status == 200) {
+				var resp = JSON.parse(xmlhttp.responseText);
+				getPost(resp.postId)
+			} else if (xmlhttp.status == 400) {
+				//TODO alert('There was an error 400');
+			} else {
+				//TODO alert('something else other than 200 was returned');
+			}
+		}
 	};
 	xmlhttp.open("GET", ajax_url, true);
 	xmlhttp.send();
 }
 
-function getExactPost(postId){
+function getPost(postId){
+	window.location.hash = '';
+	if (postId != 'undefined'){
+		window.location.hash = '#post'+postId;
+	}
 	loading();
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function(){
-		handleGetPosts(xmlhttp, false);
-		window.location.hash = '';
-		if (postId != 'undefined'){
-			window.location.hash = '#post'+postId;
+		if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+			if (xmlhttp.status == 200) {
+				addPost(JSON.parse(xmlhttp.responseText));
+			} else if (xmlhttp.status == 400) {
+				//TODO alert('There was an error 400');
+			} else {
+				//TODO alert('something else other than 200 was returned');
+			}
+			unloading();
 		}
 	};
-	xmlhttp.open("GET", ajax_url + postId, true);
+	xmlhttp.open("GET", ajax_posts_url + postId + '.json', true);
 	xmlhttp.send();
-}
-
-function deletePost(postId, modId, pass){
-	var mod = {
-		"modId": modId,
-		"pass": pass
-	};
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("DELETE", ajax_url + postId, true);
-	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-	xmlhttp.send(JSON.stringify(mod));
-}
-
-function getNewerPosts(){
-	loading();
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function(){
-		handleGetPosts(xmlhttp, false);
-	};
-	xmlhttp.open("GET", ajax_url + highest_id + '/up', true);
-	xmlhttp.send();
-}
-
-function getOlderPosts(){
-	loading();
-	if (lowest_id > 1){
-		var xmlhttp = new XMLHttpRequest();
-		xmlhttp.onreadystatechange = function(){
-			handleGetPosts(xmlhttp, true);
-		};
-		xmlhttp.open("GET", ajax_url + lowest_id + '/down', true);
-		xmlhttp.send();
-	}
-}
-
-function handleGetPosts(xmlhttp, reverse){
-	if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-		if (xmlhttp.status == 200) {
-			var resp = JSON.parse(xmlhttp.responseText);
-			if (reverse !== 'undefined' && reverse){
-				reverse(resp);
-			}
-			for (var i = 0; i < resp.length; i++){
-				post = resp[i];
-				addPost(post);
-			}
-		} else if (xmlhttp.status == 400) {
-			//TODO alert('There was an error 400');
-		} else {
-			//TODO alert('something else other than 200 was returned');
-		}
-		unloading();
-	}
 }
 
 function addPost(postObj){
@@ -159,7 +125,7 @@ function addPost(postObj){
 				el.onclick = function(){
 					// Download post if not on page
 					if (postIds.indexOf(elPostId) == -1){
-						getExactPost(elPostId);
+						getPost(elPostId);
 					}
 					return true;
 				}
@@ -231,7 +197,7 @@ function quote(postId){
 function makePost(){
 	var makePostButton = document.getElementById('makePost');
 	makePostButton.disabled = true;
-	
+
 	var post = {};
 	var postMsg = document.getElementById('postMsg');
 	post.msg = postMsg.value;
@@ -240,10 +206,9 @@ function makePost(){
 	post.img = postImg.value;
 	postImg.value = '';
 	previewImage();
-	
+
 	if (post.msg != '' || post.img != ''){
 		var xmlhttp = new XMLHttpRequest();
-		
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == XMLHttpRequest.DONE) {
 				if (xmlhttp.status == 200) {
@@ -276,14 +241,18 @@ function makeMod(pass){
 	xmlhttp.send(JSON.stringify(mod));
 }
 
+clickLoadAmount = 5;
+
 // Load newer posts
 function impatientClick(){
 	var impatient = document.getElementById('impatient');
 	impatient.disabled = true;
 	if (highest_id == null){
-		getPosts();
+		getLatestPost();
 	} else {
-		getNewerPosts();
+		for (var i = 1; i <= clickLoadAmount; i++){
+			getPost(highest_id+i);
+		}
 	}
 	buttonTimedDisable(impatient, button_delay);
 }
@@ -292,7 +261,9 @@ function impatientClick(){
 function ancientClick(){
 	var ancient = document.getElementById('ancient');
 	ancient.disabled = true;
-	getOlderPosts();
+	for (var i = 1; i <= clickLoadAmount; i++){
+		getPost(lowest_id-i);
+	}
 	buttonTimedDisable(ancient, button_delay);
 }
 
@@ -374,13 +345,13 @@ function init(){
 	document.getElementById('postImg').onpaste = function(){
 		setTimeout(previewImage, 5);
 	};
-	
+
 	// Initial load
 	impatientClick();
 	// Resolve hash
 	var hash = window.location.hash.split('post');
 	if (hash.length > 0){
-		getExactPost(hash[1]);
+		getPost(hash[1]);
 	}
 	// Auto refresh
 	setInterval(impatientClick, auto_refresh_delay);
