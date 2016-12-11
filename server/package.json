@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node app.js",
+    "build": "rm *.js & coffee -c .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,7 +19,10 @@
     "url": "https://github.com/ScreamingHawk/thread-site/issues"
   },
   "dependencies": {
+    "aws-sdk": "^2.7.10",
+    "dateformat": "^2.0.0",
     "mysql": "^2.11.1",
+    "path": "^0.12.7",
     "xss": "^0.2.13"
   },
   "devDependencies": {
