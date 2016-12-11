@@ -1,5 +1,6 @@
 {
-	"s3Bucket": "place_holder",
+	"awsProfile": "placeholder",
+	"s3Bucket": "placeholder",
 	"s3Override": true,
 	"postLimit": 100,
 	"serverPort": 3001

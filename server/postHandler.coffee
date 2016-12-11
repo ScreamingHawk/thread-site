@@ -8,6 +8,9 @@ if config.s3Override
 
 if not config.S3Override
 	AWS = require 'aws-sdk'
+	if config.awsProfile
+		AWS.config.credentials = new AWS.SharedIniFileCredentials
+			profile: config.awsProfile
 
 exports = module.exports = {}
 
@@ -20,8 +23,21 @@ exports.latestPostId = (next)->
 			else
 				calculateLatestPostId files, next
 	else
-		s3 = AWS.S3()
-		#TODO
+		s3 = new AWS.S3()
+		s3.listObjects
+				Bucket: 'threadsite.link'
+				Prefix: 'posts/'
+			, (err, data)->
+				if err?
+					console.log 'Error reading files: ' + err
+					next 'Error reading files'
+				else
+					files = []
+					async.each data.Contents, (obj, callback)->
+							files.push obj.Key
+							callback()
+						, (err)->
+							calculateLatestPostId files, next
 
 calculateLatestPostId = (files, next)->
 	if files?
@@ -63,7 +79,7 @@ exports.insertPost = (msg, img, next)->
 					else
 						next null, postId
 			else
-				s3 = AWS.S3()
+				s3 = new AWS.S3()
 				s3.putObject 
 						Bucket: 'threadsite.link'
 						Key: 'posts/' + postId + '.json'
