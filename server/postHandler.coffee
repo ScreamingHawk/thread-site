@@ -5,10 +5,9 @@ path = require 'path'
 config = require './config.json'
 if config.s3Override
 	fs = require 'fs'
-
-if not config.S3Override
+else
 	AWS = require 'aws-sdk'
-	if config.awsProfile
+	if config.awsProfile?
 		AWS.config.credentials = new AWS.SharedIniFileCredentials
 			profile: config.awsProfile
 
