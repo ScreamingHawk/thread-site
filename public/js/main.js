@@ -225,7 +225,7 @@ function makePost(){
 				}
 				impatientClick();
 			}
-			buttonTimedDisable(makePostButton, posting_delay);
+			buttonTimedDisable(makePostButton, 'Post', posting_delay);
 		};
 
 		xmlhttp.open("POST", ajax_url, true);
@@ -245,7 +245,7 @@ function impatientClick(){
 	} else {
 		getPost(highest_id+1);
 	}
-	buttonTimedDisable(impatient, button_delay);
+	buttonTimedDisable(impatient, 'Impatient', button_delay);
 }
 
 // Load older posts
@@ -255,20 +255,20 @@ function ancientClick(){
 	for (var i = 1; i <= bulk_load_amount; i++){
 		getPost(lowest_id-i);
 	}
-	buttonTimedDisable(ancient, button_delay);
+	buttonTimedDisable(ancient, 'Ancient', button_delay);
 }
 
-function buttonTimedDisable(butt, seconds, repeat){
+function buttonTimedDisable(butt, initText, seconds, repeat){
 	butt.disabled = true;
 	if (repeat == true){
-		//butt.innerText = butt.innerText.slice(0, butt.innerText.lastIndexOf(" "));
+		//butt.innerText = initText;
 	}
 	if (seconds <= 0){
 		butt.disabled = false;
 	} else {
 		//butt.innerText += ' '+seconds+'...';
 		setTimeout(function(){
-			buttonTimedDisable(butt, seconds-1, true);
+			buttonTimedDisable(butt, initText, seconds-1, true);
 		}, 1000);
 	}
 }
