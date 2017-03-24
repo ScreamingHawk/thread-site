@@ -34,8 +34,8 @@ function getLatestPost(){
 
 function getPost(postId){
 	console.log('Checking: '+postId);
-	if (!postId || postId < 1){
-		// Too low
+	if (!postId || postId < 1 || postIds.indexOf(postId) > -1){
+		// Too low or already loaded
 		return;
 	}
 	loading();
