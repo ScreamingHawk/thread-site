@@ -32,7 +32,7 @@ function getLatestPost(){
 	xmlhttp.send();
 }
 
-function getPost(postId){
+function getPost(postId, jump){
 	console.log('Checking: '+postId);
 	if (!postId || postId < 1 || postIds.indexOf(postId) > -1){
 		// Too low or already loaded
@@ -44,7 +44,7 @@ function getPost(postId){
 		if (xmlhttp.readyState == XMLHttpRequest.DONE) {
 			if (xmlhttp.status == 200) {
 				console.log('Latest post: '+xmlhttp.responseText)
-				addPost(JSON.parse(xmlhttp.responseText));
+				addPost(JSON.parse(xmlhttp.responseText), jump);
 			} else if (xmlhttp.status == 400) {
 				console.log('There was an error 400');
 				//TODO alert('There was an error 400');
@@ -59,7 +59,7 @@ function getPost(postId){
 	xmlhttp.send();
 }
 
-function addPost(postObj){
+function addPost(postObj, jump){
 	// Check post not already exists
 	var exist = document.getElementById('post'+postObj.postId);
 	if (exist === null){
@@ -123,13 +123,11 @@ function addPost(postObj){
 				s = temp.splice(0, postText.match(re)[0].length).join('');
 				postText = temp.join('');
 				el.innerText = s;
-				elPostId = s.slice(2, s.length);
+				var elPostId = s.slice(2, s.length);
 				el.href = '#post'+elPostId;
 				el.onclick = function(){
 					// Download post if not on page
-					if (postIds.indexOf(elPostId) == -1){
-						getPost(elPostId);
-					}
+					getPost(this.href.split('#post')[1], true);
 					return true;
 				}
 				postTextP.appendChild(el);
@@ -180,6 +178,9 @@ function addPost(postObj){
 				window.scrollTo(window.scrollX, window.scrollY + post.scrollHeight);
 			}
 		}, 50);
+	}
+	if (jump){
+		window.location.hash = '#post'+postObj.postId;
 	}
 }
 
