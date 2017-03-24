@@ -310,8 +310,8 @@ function initThemes(){
 		opt.value = themes[i];
 		themeSelect.appendChild(opt);
 	}
-	// Default to first non-blank
-	themeSelect.selectedIndex = 1;
+	// Randomly pick a theme on load
+	themeSelect.selectedIndex = Math.floor(Math.random() * themes.length);
 	toggleTheme();
 }
 
