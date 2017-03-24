@@ -34,13 +34,9 @@ function getLatestPost(){
 
 function getPost(postId){
 	console.log('Checking: '+postId);
-	if (postId < 1){
+	if (!postId || postId < 1){
 		// Too low
 		return;
-	}
-	window.location.hash = '';
-	if (postId){
-		window.location.hash = '#post'+postId;
 	}
 	loading();
 	var xmlhttp = new XMLHttpRequest();
@@ -238,16 +234,6 @@ function makePost(){
 	} else {
 		makePostButton.disabled = false;
 	}
-}
-
-function makeMod(pass){
-	var mod = {
-		"pass": pass
-	};
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST", ajax_url + 'mod', true);
-	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-	xmlhttp.send(JSON.stringify(mod));
 }
 
 // Load newer posts
