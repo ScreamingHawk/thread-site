@@ -1,7 +1,7 @@
 # Thread Site
 A single thread style forum. 
 
-### We are **no longer live** at [ThreadSite.link](http://threadsite.link)
+### We are *no longer* live at [ThreadSite.link](http://threadsite.link)
 
 ## Anonymous
 We don't store any user identifying information. 
